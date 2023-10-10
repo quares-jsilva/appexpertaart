@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "627746570465",
+    "firebase_url": "https://clientes-experta.firebaseio.com",
+    "project_id": "experta-appclientesart-prod",
+    "storage_bucket": "experta-appclientesart-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627746570465:android:03495990c26c618693b7a0",
+        "android_client_info": {
+          "package_name": "com.expertaart.clientes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058630662922-7vsc3bhfsm3omtt415m1i3ajvga9t5ee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGWLKQ_aExjRkHLgWCI-xfRk2vLw83mRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1058630662922-7vsc3bhfsm3omtt415m1i3ajvga9t5ee.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1058630662922-8acotec51b9f49g1c06o0p55sdnpl1aj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.expertaart.clientes"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627746570465:android:03495990c26c618693b7a0",
+        "android_client_info": {
+          "package_name": "com.expertaart.clientes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058630662922-7vsc3bhfsm3omtt415m1i3ajvga9t5ee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGWLKQ_aExjRkHLgWCI-xfRk2vLw83mRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1058630662922-7vsc3bhfsm3omtt415m1i3ajvga9t5ee.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1058630662922-8acotec51b9f49g1c06o0p55sdnpl1aj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.expertaart.clientes"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

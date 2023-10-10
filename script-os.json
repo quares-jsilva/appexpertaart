@@ -1,0 +1,16 @@
+{
+  "android:development:default": "export ENVFILE=.env.development && cp -f google-services_local.json ./android/app/google-services.json && react-native run-android",
+  "android:production:default": "export ENVFILE=.env.production && cp -f google-services_prod.json ./android/app/google-services.json && react-native run-android",
+  "android:development:win32": "set ENVFILE=.env.development && cp -f google-services_local.json ./android/app/google-services.json && react-native run-android",
+  "android:production:win32": "set ENVFILE=.env.production && cp -f google-services_prod.json ./android/app/google-services.json && react-native run-android",
+  "android:clean:default": "cd ./android && ./gradlew clean",
+  "android:clean:win32": "cd android && gradlew clean",
+  "android:build:development:apk:default": "export ENV=development && export ENVFILE=.env.development && cp -f google-services_local.json ./android/app/google-services.json && npx react-native run-android --variant=release",
+  "android:build:production:apk:default": "export ENV=production && export ENVFILE=.env.production && cp -f google-services_prod.json ./android/app/google-services.json && npx react-native run-android --variant=release",
+  "android:build:development:aab:default": "export ENV=development && export ENVFILE=.env.development && cp -f google-services_local.json ./android/app/google-services.json && cd ./android && ./gradlew clean && ./gradlew bundleRelease",
+  "android:build:production:aab:default": "export ENV=production && export ENVFILE=.env.production && cp -f google-services_prod.json ./android/app/google-services.json && cd ./android && ./gradlew clean && ./gradlew bundleRelease",
+  "android:build:development:apk:win32": "set ENV=development && set ENVFILE=.env.development && cp -f google-services_local.json ./android/app/google-services.json && npx react-native run-android --variant=release",
+  "android:build:production:apk:win32": "set ENV=production && set ENVFILE=.env.production && cp -f google-services_prod.json ./android/app/google-services.json && npx react-native run-android --variant=release",
+  "android:build:development:aab:win32": "set ENV=development && set ENVFILE=.env.development && cp -f google-services_local.json ./android/app/google-services.json && cd android && gradlew clean && gradlew bundleRelease",
+  "android:build:production:aab:win32": "set ENV=production && set ENVFILE=.env.production && cp -f google-services_prod.json ./android/app/google-services.json && cd android && gradlew clean && gradlew bundleRelease"
+}

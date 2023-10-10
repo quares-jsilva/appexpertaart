@@ -1,13 +1,20 @@
 {
-  "name": "expertaart",
-  "version": "0.0.1",
+  "name": "appexpertaart",
+  "version": "4.3.04",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint .",
+    "android:development": "node script-os.js",
+    "android:production": "node script-os.js",
+    "android:clean": "node script-os.js",
+    "android:build:development:apk": "node script-os.js",
+    "android:build:production:apk": "node script-os.js",
+    "android:build:development:aab": "node script-os.js",
+    "android:build:production:aab": "node script-os.js"
   },
   "dependencies": {
     "@formatjs/intl-getcanonicallocales": "^2.2.1",
@@ -81,12 +88,35 @@
     "@types/react": "^18.0.24",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.2.1",
+    "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.19.0",
+    "eslint-import-resolver-babel-module": "^5.3.2",
+    "eslint-plugin-import": "^2.28.1",
     "jest": "^29.2.1",
     "metro-react-native-babel-preset": "0.76.8",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
     "typescript": "4.8.4"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "moduleNameMapper": {
+      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
+    },
+    "setupFiles": [
+      "./jest.setup.js",
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
+    "timers": "fake",
+    "testEnvironment": "jsdom"
   },
   "engines": {
     "node": ">=16"

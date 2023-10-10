@@ -1,79 +1,108 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Experta ART
 
-# Getting Started
+App Mobile Experta ART.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Requerimientos
 
-## Step 1: Start the Metro Server
+- [React Native environment](https://reactnative.dev/docs/environment-setup)
+- Environment files (incluidos en el repositorio)
+- Node version: 16.13.0
+- Android 33, build tools 33.0.0
+- Ruby >= 2.6.10
+- Cocoapods >= 1.12
+- Xcode
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Instalación
 
-To start Metro, run the following command from the _root_ of your React Native project:
+Para instalar todos los paquetes y módulos de Node del proyecto, debemos ejecutar desde la raiz del proyecto el siguiente comando.
 
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+npm install
 ```
 
-## Step 2: Start your Application
+## Levantar el proyecto de forma local (Android)
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+Para poder levantar el proyecto de forma local, para desarrollar y poder debuggear, tenemos que ejecutar alguno de los siguientes comandos.
 
-### For Android
+```js
+// Ambiente testing o development.
+npm run android:development
 
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+// Ambiente productivo
+npm run android:production
 ```
 
-### For iOS
+De esa manera levantaremos el proyecto de forma local, pero tomando los archivos .env según corresponda el ambiente.
+
+## Levantar el proyecto de forma local (iOS)
+
+Para levantar el proyecto de forma local en iOS necesitaremos una Mac con Xcode instalado.
+
+Lo primero que deberíamos hacer es realizar la instalación de los Pods. Para eso ejecutaremos el siguiente comando en la carpeta ios del proyecto:
 
 ```bash
-# using npm
+pod install
+```
+
+Luego de eso podremos levantar el proyecto de forma local con el siguiente comando:
+
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+En iOS para levantar los diferentes ambientes productivos lo que tendríamos que hacer es pisar los archivos `.env`. Por defecto se toma el .env por lo que si queremos levantar el ambiente productivo, no deberíamos hacer mas nada. En cambio, si quisiéramos levantar el ambiente de testing, deberíamos pisar el archivo `.env` con las variables definidas en el archivo `.env.development`.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+Otra manera de levantar el proyecto de forma local es dirigirnos a Xcode y presionar en el botón de Run. Eso nos compilara el proyecto y lo levantara localmente para desarrollo.
 
-## Step 3: Modifying your App
+## Generación de APK
 
-Now that you have successfully run the app, let's modify it.
+Para generar el apk tenemos que ejecutar el siguiente comando:
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+```js
+// Productivo
+npm run android:build:production:apk
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+// Testing
+npm run android:build:development:apk
+```
 
-## Congratulations! :tada:
+Esto nos generara un compilado (productivo o de testing, según corresponda) dentro de la carpeta `android/app/build/outputs/apk/release/`.
 
-You've successfully run and modified your React Native App. :partying_face:
+## Generación del AAB
 
-### Now what?
+Para generar el AAB, tendremos que ejecutar el siguiente comando desde la carpeta root del proyecto.:
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+```bash
+// Productivo
+npm run android:build:production:aab
 
-# Troubleshooting
+// Testing
+npm run android:build:development:aab
+```
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Esto nos generara un compilado que nos servirá para subir en el Play Store dentro de la carpeta `android/app/build/outputs/bundle/release/`.
 
-# Learn More
+## Generación del IPA
 
-To learn more about React Native, take a look at the following resources:
+Para la generación del IPA tenemos que tener en cuenta varias cuestiones. Por un lado lo primero que tenemos que realizar cuando queramos generar un compilado es pisar el archivo `.env` con el archivo `.env.development` ó `.env.production` según corresponda al ambiente que queramos generar.
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Luego de eso debemos generar de nuevo el archivo `main.jsbundle`, para generar de nuevo dicho archivo debemos ejecutar el siguiente comando desde la carpeta root del proyecto.
+
+```bash
+npx react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios
+```
+
+Luego de eso tendremos que seguir los siguientes pasos:
+
+- Abrir nuestro proyecto en XCode
+- Seleccionar como objetivo de nuestro proyecto la opción Any iOS Device (arm64) o Generic iOS Device.
+- Seleccionamos `Product` y luego la opción `Clean Build Folder`.
+- Luego de nuevo en el menú Product seleccionamos la opción `Archive`. - Una vez que finalice el proceso de Archive veremos nuestra aplicación en un listado debajo de Archives.
+- Seleccionamos nuestra app y apretamos en la opción `Distribute App`.
+- Debemos seleccionar un método para exportar, ahí tenemos tres opciones válidas: `Ad Hoc`, `Enterprise`, ó `Development`.
+- Setear las opciones de Distribución:
+  - App Thinning: All compatible device variants.
+  - Dejar marcado la opción Rebuild from Bitcode
+  - Dejar desmarcada la opción include manifest for over-the-air installation.
+- Seleccionar el certificado de distribución y el Perfil correspondiente generados previamente. Esto nos generará un archivo cuya extensión es .ipa
+- Una vez finalizada la generación, el proceso estará completo, quedará solo hacer click en `Export` y elegir donde queremos que se nos guarde el IPA.
