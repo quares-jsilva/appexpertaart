@@ -13,13 +13,13 @@ const MoreNavigator = () => {
 
     return (
         <Drawer.Navigator 
-          initialRouteName="Main" 
-          screenOptions={{swipeEnabled: false}}
+          initialRouteName="SecondaryMain" 
+          screenOptions={{swipeEnabled: false, headerShown: false, drawerStyle: { width: Dimensions.get('window').width }}}
           drawerContent={props => <DrawerContainer {...props} />}
           drawerStyle={{
             width: Dimensions.get('window').width
           }}>
-            <Drawer.Screen name="Main" component={MainNavigator} />
+            <Drawer.Screen name="SecondaryMain" component={MainNavigator} />
         </Drawer.Navigator>
     )
 }

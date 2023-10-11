@@ -105,7 +105,7 @@ const ApplicationNavigator = () => {
           {
             !isConnected && <NoConnection></NoConnection>
           }
-          <Stack.Navigator screenOptions={{headerBackTitle: 'Volver'}} headerMode={'none'}>
+          <Stack.Navigator screenOptions={{ headerBackTitle: 'Volver', headerShown: false }} >
             <Stack.Screen name="Startup" component={IndexStartupContainer} />
             {isApplicationLoaded && MainNavigator != null && (
               <Stack.Screen

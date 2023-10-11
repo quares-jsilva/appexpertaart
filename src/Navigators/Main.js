@@ -45,13 +45,13 @@ const MainNavigator = () => {
     setTabVisible(!viewsWithoutTabs.includes(actualView))
   }, [actualView])
 
-  const nullComponent = () => {
+  const NullComponent = () => {
     return <></>
   }
 
   return (
     <Tab.Navigator 
-      tabBarOptions={{activeTintColor: 'black'}} 
+      // tabBarOptions={{activeTintColor: 'black'}} 
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName
@@ -91,7 +91,10 @@ const MainNavigator = () => {
                     resizeMode={'contain'}
                   />
         },
-        tabBarVisible: tabVisible
+        tabBarVisible: tabVisible,
+        headerShown: false,
+        tabBarStyle: { display: tabVisible ? '' : 'none' },
+        tabBarActiveTintColor: 'black',
       })}
     >
       <Tab.Screen name="Home" component={DashboardNavigator} 
@@ -108,7 +111,7 @@ const MainNavigator = () => {
       <Tab.Screen name="Contacto" component={ContactUsNavigator} />
       { hasClaim ?
         <Tab.Screen name="WhatsApp" 
-          component={nullComponent} 
+          component={NullComponent} 
           options={{
             tabBarButton: (props) => (
               <TouchableOpacity
@@ -122,7 +125,7 @@ const MainNavigator = () => {
         />
         :
         <Tab.Screen name="Emergencia" 
-          component={nullComponent} 
+          component={NullComponent} 
           options={{
             tabBarButton: (props) => (
               <TouchableOpacity
@@ -135,7 +138,7 @@ const MainNavigator = () => {
           }}
         />
       }
-      <Tab.Screen name="Más" component={nullComponent}
+      <Tab.Screen name="Más" component={NullComponent}
         options={{
           tabBarButton: (props) => (
             <TouchableOpacity

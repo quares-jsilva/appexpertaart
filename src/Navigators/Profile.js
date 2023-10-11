@@ -7,13 +7,13 @@ const Stack = createStackNavigator()
 const ProfileNavigator = () => {
 
     return (
-        <Stack.Navigator 
-            headerMode={'screen'} 
+        <Stack.Navigator  
             screenOptions={{
                 title: 'Mi Perfil', 
                 headerTitleAlign: 'center', 
                 headerTitleStyle: {fontFamily: 'SourceSansPro-Light'},
-                headerBackTitleVisible: false
+                headerBackTitleVisible: false,
+                headerMode: 'screen',
             }}>
             <Stack.Screen name="Profile" component={ProfileContainer} />
             <Stack.Screen name="MyData" component={MyDataContainer} options={{title: 'Mis Datos', headerTitleAlign: 'center', headerTitleStyle: {fontFamily: 'SourceSansPro-Light'}}}/>

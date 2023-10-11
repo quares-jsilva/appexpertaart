@@ -51,9 +51,9 @@ const DashboardNavigator = () => {
     return (
         <Stack.Navigator 
         screenOptions={{
-            headerBackTitleVisible: false
-        }}
-        headerMode={'screen'}>
+            headerBackTitleVisible: false,
+            headerMode: 'screen'
+        }}>
             { isAuthenticated && (
                     <>
                         {homeRoute === 'Dashboard' && <Stack.Screen name="Dashboard" component={DashboardContainer} options={{headerLeft: () => { return null }, headerTitle: (props) => (<Image style={{width: 200, height: 200}} resizeMode={'contain'} source={Images['ARTIsologo']}/>), headerTitleAlign: 'center', headerStyle: {height: 100} }}/>}
