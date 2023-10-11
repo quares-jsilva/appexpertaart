@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { View, Text, ScrollView, Linking } from "react-native"
 import { useSelector } from 'react-redux'
 
@@ -15,10 +15,14 @@ const dashboardContainer = () => {
     const { Gutters, Layout, Fonts, Common, Images } = useTheme()
     const [segurosInstalled, setSegurosInstalled] = useState(false)
 
-    useEffect(async () => {
+    const checkIfAppIsInstalled = useCallback(async () => {
         const installed = await isAppInstalled('appseguros://seguros/')
         setSegurosInstalled(installed)
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        checkIfAppIsInstalled()
+    }, []);
     
     return (
         <ScrollView>

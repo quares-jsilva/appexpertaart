@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ReferentApi from '@/Services/Referent/Referent'
 import { useNavigation } from '@react-navigation/native'
@@ -179,7 +179,7 @@ const useReferents = ({contractSelected, filterText = ''}) => {
         }
     }
 
-    useEffect(async () => {
+    const getReferents = useCallback(async () => {
         if(!!contractSelected){
             setLoading(true)
             try {
@@ -220,6 +220,10 @@ const useReferents = ({contractSelected, filterText = ''}) => {
             }
         }
     }, [contractSelected, filterText])
+
+    useEffect(() => {
+        getReferents();
+    }, [])
 
     return {
         referents, 

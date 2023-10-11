@@ -58,13 +58,10 @@ const ApplicationNavigator = () => {
       }
 
       // Listen to incoming links from deep linking
-      Linking.addEventListener('url', onReceiveURL)
+      const subscription = Linking.addEventListener('url', onReceiveURL)
 
-      return () => {
-        // Clean up the event listeners
-        Linking.removeAllListeners('url')
-      }
-
+      return () => subscription.remove();
+    
     },
 
     config: {

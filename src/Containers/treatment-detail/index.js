@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { View, Text } from "react-native"
 import Analytics from '../../libs/analytics'
 import { useTheme } from '@/Theme'
@@ -21,11 +21,7 @@ const TreatmentContainer = ({route}) => {
     const [turns, setTurns] = useState([])
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        Analytics.logScreen('Detalle de tratamiento', 'TreatmentContainer')
-    }, [])
-
-    useEffect(async () => {
+    const getTurns = useCallback(async () => {
         if(!!claimDetail){
             try {
                 const response = await TurnApi.getTurns(
@@ -64,6 +60,14 @@ const TreatmentContainer = ({route}) => {
             }
         }
     }, [claimDetail])
+
+    useEffect(() => {
+        Analytics.logScreen('Detalle de tratamiento', 'TreatmentContainer')
+    }, [])
+
+    useEffect(() => {
+        getTurns();
+    }, [])
 
     const renderDetail = (rowData, sectionID, rowID) => {
         return (

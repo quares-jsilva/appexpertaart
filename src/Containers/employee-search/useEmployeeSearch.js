@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import ContractApi from '@/Services/Contract/Contract'
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
@@ -14,11 +14,13 @@ const useEmployeeSearch = (filter = null, from = 1, to = 10, contractSelected) =
     const { pwid } = useSelector((state) => state.user)
     const navigation = useNavigation()
 
-    useEffect(async () => {
-        let reset = false
+    const getEmployees = useCallback(async () => {
+        let reset = false;
+
         if(filter != lastFilter) {
             reset = true
-        }
+        };
+
         if(pwid != null && contractSelected != null) {
             setLoading(true)
             try {
@@ -53,6 +55,10 @@ const useEmployeeSearch = (filter = null, from = 1, to = 10, contractSelected) =
             }
         }
     }, [pwid, contractSelected, from, to, filter])
+
+    useEffect(() => {
+        getEmployees();
+    }, [])
 
     return {loading, employees, lastEmployee}
 }

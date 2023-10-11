@@ -127,7 +127,7 @@ const LoginContainer = (param) => {
     }
   }, [error]);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (credentials && credentials.username && credentials.password) {
       dispatch(auth(credentials));
     }

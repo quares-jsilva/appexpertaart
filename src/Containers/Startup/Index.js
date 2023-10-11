@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { ActivityIndicator, View, Text } from 'react-native'
 import { useTheme } from '@/Theme'
 import { useDispatch } from 'react-redux'
@@ -13,9 +13,11 @@ const IndexStartupContainer = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(async () => {
-    await dispatch(InitStartup.action())
-  }, [dispatch])
+  const initStartupAction = useCallback(async () => await dispatch(InitStartup.action()), [dispatch])
+
+  useEffect(() => {
+    initStartupAction()
+  }, [])
 
   return (
     <View style={[Layout.fill, Layout.colCenter]}>
