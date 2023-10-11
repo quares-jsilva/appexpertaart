@@ -41,24 +41,6 @@ const ProblemReportContainer = (param) => {
     const [isNotValidDni, setIsNotValidDni] = useState(false)
     const [errorDniMessage, setErrorDniMessage] = useState('')
 
-    const goBack = () => {
-        if(errorFrom.includes(homeRoute)) {
-            navigation.navigate(homeRoute)
-        } else {
-            navigation.goBack()
-        }
-    }
-
-    useEffect(()=>{
-        navigation.setOptions({
-            headerLeft: () => (
-                <HeaderBackButton
-                    onPress={() => goBack()}
-                />
-            )
-        })
-    }, [])
-
     const validateDescription = (value) => {
         setDescription(value)
         setIsNotValidDescription(false)

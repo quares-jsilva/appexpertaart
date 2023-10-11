@@ -30,7 +30,7 @@ let cardItems = [
 const SLIDER_WIDTH = Dimensions.get('window').width
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH)
 
-const dashboardARTContainer = () => {
+const DashboardARTContainer = () => {
 
     const ref = useRef(null)
     const dispatch = useDispatch()
@@ -145,4 +145,4 @@ const dashboardARTContainer = () => {
     )
 }
 
-export default dashboardARTContainer
+export default DashboardARTContainer

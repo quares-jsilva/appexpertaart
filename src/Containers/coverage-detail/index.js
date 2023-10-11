@@ -192,7 +192,6 @@ const CoverageDetailContainer = (param) => {
                                         </View>
                                         <CheckBox
                                             title='Trabajo en altura'
-                                            checked={false}
                                             textStyle={[Fonts.sourceSansSemiBold, {fontWeight: 'normal'}]}
                                             checkedColor={'#389548'}
                                             checked={heightWork}
@@ -200,7 +199,6 @@ const CoverageDetailContainer = (param) => {
                                         />
                                         <CheckBox
                                             title='Actividad de la empresa'
-                                            checked={false}
                                             textStyle={[Fonts.sourceSansSemiBold, {fontWeight: 'normal'}]}
                                             checkedColor={'#389548'}
                                             checked={activity}

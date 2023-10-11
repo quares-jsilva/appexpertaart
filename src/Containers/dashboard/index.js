@@ -9,7 +9,7 @@ import ButtonSeguros from '../../Components/ButtonSeguros'
 import { isAppInstalled } from '@/libs/deepLinks'
 import ProductSlide from '../../Components/ProductSlide'
 
-const dashboardContainer = () => {
+const DashboardContainer = () => {
 
     const { data } = useSelector((state) => state.user )
     const { Gutters, Layout, Fonts, Common, Images } = useTheme()
@@ -74,4 +74,4 @@ const dashboardContainer = () => {
 
 }
 
-export default dashboardContainer
+export default DashboardContainer
