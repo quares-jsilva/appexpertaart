@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, Image, ScrollView, Text, FlatList, TouchableOpacity } from "react-native"
+import { View, Image, ScrollView, Text, FlatList, TouchableOpacity, Platform } from "react-native"
 import { Button, CheckBox, Card, Input, ListItem } from 'react-native-elements'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
-import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
 
 import { useTheme } from '@/Theme'
@@ -12,9 +11,10 @@ import styles from './styles'
 import Loading from './loading';
 import { showMessage } from '@/Components/MessageHelper'
 import { getCertificatePrintUrl, updateEmployee } from '@/Store/Contract'
-import { BASE_URL_DOCUMENTACION, BASE_URL_GATEWAY } from '@/Config'
+import { BASE_URL_GATEWAY } from '@/Config'
 import { useValidateDestinatary } from '@/Hooks/useValidateDestinatary'
 import { viewer } from '@/Store/User/userDefinitions'
+import { DatePicker } from '../../Components/'
 
 const CoverageDetailContainer = (param) => {
     const dispatch = useDispatch()
@@ -28,14 +28,33 @@ const CoverageDetailContainer = (param) => {
     const [nonEmployee, setNonEmployee] = useState(false)
     const [someEmployee, setSomeEmployee] = useState(false)
     const [activity, setActivity] = useState(false)
-    const [heightWork, setHeightWork] = useState(false)
-    const [date, setDate] = useState(moment().format('DD-MM-YYYY').toString())
+    const [heightWork, setHeightWork] = useState(false);
+    const [date, setDate] = useState(new Date());
+    const [vigencyDate, setVigencyDate] = useState(moment(new Date(), 'DD-MM-YYYY').format('DD-MM-YYYY'));
+    const [showPicker, setShowPicker] = useState(false)
 
     const { destinatary, isNotValidDestinatary, errorDestinataryMessage, validateDestinatary } = useValidateDestinatary()
 
     useEffect(() => {
         Analytics.logScreen(`Certificado de cobertura - ${viewAs}`, 'CoverageDetailContainer')
     }, []);
+
+    const toogleDatePicker = () => {
+        setShowPicker(!showPicker);
+    };
+
+    const onChangeDate = ({ type }, selectedDate) => {
+        if(type === 'set') {
+            setDate(selectedDate);
+
+            if(Platform.OS === 'android') {
+                toogleDatePicker();
+                setVigencyDate(moment(selectedDate, 'DD-MM-YYYY').format('DD-MM-YYYY'))
+            }
+        } else {
+            toogleDatePicker();
+        }
+    };
 
     const shareDoc = () => {
         dispatch(getCertificatePrintUrl({
@@ -178,16 +197,17 @@ const CoverageDetailContainer = (param) => {
                                         <View style={Gutters.smallHPadding}>
                                             <Text style={[Fonts.sourceSansSemibold, Gutters.smallBPadding, {color: 'grey'}]}>{'Fecha de vigencia de la nómina'}</Text>
                                             <DatePicker
-                                                mode="date"
-                                                date={date}
-                                                placeholder="Seleccioná una fecha"
-                                                style={Layout.fullWidth}
-                                                format="DD-MM-YYYY"
-                                                minDate={moment().format('DD-MM-YYYY').toString()}
-                                                maxDate={moment().add(7, 'days').format('DD-MM-YYYY').toString()}
-                                                confirmBtnText="Confirmar"
-                                                cancelBtnText="Cancelar"
-                                                onDateChange={(date) => setDate(date)}
+                                                inputPlaceholder="Seleccioná una fecha" 
+                                                inputPlaceholderColor={'#DCDCDC'}
+                                                inputValue={vigencyDate}
+                                                onChangeText={setVigencyDate}
+                                                inputErrorStyle={{ color: 'red' }}
+                                                inputErrorMessage={errorDestinataryMessage}
+                                                datePickerValue={date}
+                                                maxDate={new Date().setDate(new Date().getDate() + 7)}
+                                                showPicker={showPicker}
+                                                onPress={toogleDatePicker}
+                                                onChange={onChangeDate}
                                             />
                                         </View>
                                         <CheckBox

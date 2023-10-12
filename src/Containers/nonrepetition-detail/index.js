@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, ScrollView, Text } from "react-native"
+import { View, ScrollView, Text, Platform } from "react-native"
 import { useTheme } from '@/Theme'
 import { Button, CheckBox, Card, Input } from 'react-native-elements';
 import moment from 'moment'
-import DatePicker from 'react-native-datepicker'
+import { DatePicker } from '../../Components'
 
 import styles from './styles'
 import Analytics from '../../libs/analytics'
@@ -23,11 +23,30 @@ const NonRepetitionDetailContainer = (param) => {
     const { loading, printUrl, status, message } = useSelector((state) => state.contract )
     const { dest, contractSelected, viewAs = viewer.AFILIADO } = param.route.params || {}
     const { destinatary, isNotValidDestinatary, errorDestinataryMessage, validateDestinatary } = useValidateDestinatary()
-    const [date, setDate] = useState(moment().format('DD-MM-YYYY').toString())
+    const [date, setDate] = useState(new Date());
+    const [showPicker, setShowPicker] = useState(false)
+    const [vigencyDate, setVigencyDate] = useState(moment(new Date(), 'DD-MM-YYYY').format('DD-MM-YYYY'));
     const dispatch = useDispatch()
     const navigation = useNavigation()
 
     const [heightWork, setHeightWork] = useState(false)
+
+    const toogleDatePicker = () => {
+        setShowPicker(!showPicker);
+    };
+
+    const onChangeDate = ({ type }, selectedDate) => {
+        if(type === 'set') {
+            setDate(selectedDate);
+
+            if(Platform.OS === 'android') {
+                toogleDatePicker();
+                setVigencyDate(moment(selectedDate, 'DD-MM-YYYY').format('DD-MM-YYYY'))
+            }
+        } else {
+            toogleDatePicker();
+        }
+    };
     
     const shareDoc = () => {
         dispatch(getNonRepetitionPrintUrl({
@@ -122,16 +141,17 @@ const NonRepetitionDetailContainer = (param) => {
                                         <View style={Gutters.smallHPadding}>
                                             <Text style={[Fonts.sourceSansSemibold, Gutters.smallBPadding, {color: 'grey'}]}>{'Fecha de vigencia de la nómina'}</Text>
                                             <DatePicker
-                                                mode="date"
-                                                date={date}
-                                                placeholder="Seleccioná una fecha"
-                                                style={Layout.fullWidth}
-                                                format="DD-MM-YYYY"
-                                                minDate={moment().format('DD-MM-YYYY').toString()}
-                                                maxDate={moment().add(7, 'days').format('DD-MM-YYYY').toString()}
-                                                confirmBtnText="Confirmar"
-                                                cancelBtnText="Cancelar"
-                                                onDateChange={(date) => setDate(date)}
+                                                inputPlaceholder="Seleccioná una fecha" 
+                                                inputPlaceholderColor={'#DCDCDC'}
+                                                inputValue={vigencyDate}
+                                                onChangeText={setVigencyDate}
+                                                inputErrorStyle={{ color: 'red' }}
+                                                inputErrorMessage={errorDestinataryMessage}
+                                                datePickerValue={date}
+                                                maxDate={new Date().setDate(new Date().getDate() + 7)}
+                                                showPicker={showPicker}
+                                                onPress={toogleDatePicker}
+                                                onChange={onChangeDate}
                                             />
                                         </View>
                                         <CheckBox
