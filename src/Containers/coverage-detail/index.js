@@ -31,7 +31,6 @@ const CoverageDetailContainer = (param) => {
     const [heightWork, setHeightWork] = useState(false);
     const [date, setDate] = useState(new Date());
     const [vigencyDate, setVigencyDate] = useState(moment(new Date(), 'DD-MM-YYYY').format('DD-MM-YYYY'));
-    const [showPicker, setShowPicker] = useState(false)
 
     const { destinatary, isNotValidDestinatary, errorDestinataryMessage, validateDestinatary } = useValidateDestinatary()
 
@@ -39,21 +38,16 @@ const CoverageDetailContainer = (param) => {
         Analytics.logScreen(`Certificado de cobertura - ${viewAs}`, 'CoverageDetailContainer')
     }, []);
 
-    const toogleDatePicker = () => {
-        setShowPicker(!showPicker);
-    };
-
     const onChangeDate = ({ type }, selectedDate) => {
         if(type === 'set') {
             setDate(selectedDate);
 
             if(Platform.OS === 'android') {
-                toogleDatePicker();
                 setVigencyDate(moment(selectedDate, 'DD-MM-YYYY').format('DD-MM-YYYY'))
             }
-        } else {
-            toogleDatePicker();
         }
+
+        return;
     };
 
     const shareDoc = () => {
@@ -201,12 +195,8 @@ const CoverageDetailContainer = (param) => {
                                                 inputPlaceholderColor={'#DCDCDC'}
                                                 inputValue={vigencyDate}
                                                 onChangeText={setVigencyDate}
-                                                inputErrorStyle={{ color: 'red' }}
-                                                inputErrorMessage={errorDestinataryMessage}
                                                 datePickerValue={date}
                                                 maxDate={new Date().setDate(new Date().getDate() + 7)}
-                                                showPicker={showPicker}
-                                                onPress={toogleDatePicker}
                                                 onChange={onChangeDate}
                                             />
                                         </View>

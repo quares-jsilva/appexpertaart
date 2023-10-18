@@ -1,9 +1,10 @@
-import React, { useState, useImperativeHandle, useRef } from 'react'
-import { View, Image, StyleSheet, Text } from 'react-native'
+import React, { useState } from 'react'
+import { View, StyleSheet, Text } from 'react-native'
 import { useTheme } from '@/Theme'
 import { Button, Overlay, Input, CheckBox } from 'react-native-elements'
 import { ScrollView } from 'react-native'
-import DatePicker from 'react-native-datepicker'
+import { DatePicker } from '../../Components/'
+import moment from 'moment'
 
 const styles = StyleSheet.create({
     text: {
@@ -27,9 +28,11 @@ const Filter = ({callback, filter}) => {
     const [name, setName] = useState(filter && filter.nombre ? filter.nombre : undefined)
     const [cuil, setCuil] = useState(filter && filter.cuil ? filter.cuil : undefined)
     const [claim, setClaim] = useState(filter && filter.nroSiniestro ? filter.nroSiniestro : undefined)
-    const [from, setFrom] = useState(filter && filter.fechaDenunciaDesde ? filter.fechaDenunciaDesde : undefined)
-    const [to, setTo] = useState(filter && filter.fechaDenunciaHasta ? filter.fechaDenunciaHasta : undefined)
+    const [from, setFrom] = useState(filter && filter.fechaDenunciaDesde ? new Date(filter.fechaDenunciaDesde) : new Date());
+    const [to, setTo] = useState(filter && filter.fechaDenunciaHasta ? new Date(filter.fechaDenunciaHasta) : new Date())
     const [selectedState, setSelectedState] = useState(filter && filter.estadoAdm ? filter.estadoAdm : (filter.estadoAdm === null ? 'T' : undefined))
+    const [dateTo, setDateTo] = useState(moment(to, 'DD-MM-YYYY').format('DD-MM-YYYY'))
+    const [dateFrom, setDateFrom] = useState(moment(from, 'DD-MM-YYYY').format('DD-MM-YYYY'))
 
     const pressPosition = (value) => {
         setSelectedState(value)
@@ -47,6 +50,24 @@ const Filter = ({callback, filter}) => {
             // to: 21
         })
     }
+
+    const onChangeDate = ({ type }, selectedDate, selectorType) => {
+        if(type === 'set' && selectorType === 'dateTo') {
+            setTo(selectedDate);
+
+            if(Platform.OS === 'android') {
+                setDateTo(moment(selectedDate, 'DD-MM-YYYY').format('DD-MM-YYYY'))
+            }
+        } else if (type === 'set' && selectorType === 'dateFrom') {
+            setFrom(selectedDate);
+
+            if(Platform.OS === 'android') {
+                setDateFrom(moment(selectedDate, 'DD-MM-YYYY').format('DD-MM-YYYY'))
+            }
+        }
+
+        return;
+    };
   
     return (
         <Overlay 
@@ -125,14 +146,14 @@ const Filter = ({callback, filter}) => {
                     </View>
                     <View style={Gutters.smallPadding}>
                         <DatePicker
-                            mode="date"
-                            date={from}
-                            placeholder="seleccioná una fecha"
-                            style={Layout.fullWidth}
-                            format="YYYY-MM-DD"
-                            confirmBtnText="Confirmar"
-                            cancelBtnText="Cancelar"
-                            onDateChange={(date) => setFrom(date)}
+                            inputPlaceholder="Seleccioná una fecha" 
+                            inputPlaceholderColor={'#DCDCDC'}
+                            inputValue={dateFrom}
+                            onChangeText={setDateFrom}
+                            datePickerValue={from}
+                            onChange={(params, selectedDate) => onChangeDate(params, selectedDate, 'dateFrom')}
+                            minDate={new Date().setDate(new Date().getDate() - 10000)}
+                            maxDate={new Date()}
                         />
                     </View>
                     <View style={Gutters.smallPadding}>
@@ -140,14 +161,14 @@ const Filter = ({callback, filter}) => {
                     </View>
                     <View style={Gutters.smallPadding}>
                         <DatePicker
-                            mode="date"
-                            date={to}
-                            placeholder="seleccioná una fecha"
-                            style={Layout.fullWidth}
-                            format="YYYY-MM-DD"
-                            confirmBtnText="Confirmar"
-                            cancelBtnText="Cancelar"
-                            onDateChange={(date) => setTo(date)}
+                            inputPlaceholder="Seleccioná una fecha" 
+                            inputPlaceholderColor={'#DCDCDC'}
+                            inputValue={dateTo}
+                            onChangeText={setDateTo}
+                            datePickerValue={to}
+                            onChange={(value, selectedDate) => onChangeDate(value, selectedDate, 'dateTo')}
+                            minDate={new Date().setDate(new Date().getDate() - 10000)}
+                            maxDate={new Date()}
                         />
                     </View>
                 </View>
