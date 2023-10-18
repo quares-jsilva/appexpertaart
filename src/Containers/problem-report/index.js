@@ -29,7 +29,7 @@ const ProblemReportContainer = (param) => {
     const [images64, setImages64] = useState([])
     const [dni, setDni] = useState('')
 
-    const addImage = (image) => {
+    const addImage = async (image) => {
         setImages([...images, image])
         setImages64([...images64, 'data:image/jpeg;base64,' + image.base64])
     }
@@ -211,8 +211,8 @@ const ProblemReportContainer = (param) => {
                                                             maxWidth: 600,
                                                             includeBase64: true
                                                         },
-                                                        (response) => {
-                                                            addImage(response)
+                                                        async (response) => {
+                                                            await addImage(response.assets[0])
                                                         },
                                                         )
                                                     }>
